@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mit XMLSpy v2014 (x64) (http://www.altova.com) von Dr. Peter Bauer (Universitätsklinikum Tübingen) bearbeitet -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified" attributeFormDefault="unqualified" vc:minVersion="1.1">
+	<xs:element name="Sample">
+		<xs:annotation>
+			<xs:documentation>A single NGS sample</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="KitInformation">
+					<xs:annotation>
+						<xs:documentation>Information about the library preparation and target enrichment kits used for processing of the sample.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="TargetRegion" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Target region in BED format: https://www.ensembl.org/info/website/upload/bed.html</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="build" use="required">
+												<xs:annotation>
+													<xs:documentation>Genome build the corrdinates refer to.</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:enumeration value="GRCh37"/>
+														<xs:enumeration value="GRCh38"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>Kit name</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="type" use="required">
+							<xs:annotation>
+								<xs:documentation>Kit type</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="WGS"/>
+									<xs:enumeration value="WES"/>
+									<xs:enumeration value="Panel"/>
+									<xs:enumeration value="RNA"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="shotgun" type="xs:boolean" use="required">
+							<xs:annotation>
+								<xs:documentation>If a shotgun-based approach is used, i.e. random fragmentation. If 'false' this indicates an amplicon-based approach.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DiseaseInformation">
+					<xs:annotation>
+						<xs:documentation>Disease information about a sample</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="HPO" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>HPO information</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="id" use="required">
+										<xs:annotation>
+											<xs:documentation>HPO term identifier, e.g. 'HP:0001371'</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="HP:[0-9]{7}"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Orphanet" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Orphanet information</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="id" use="required">
+										<xs:annotation>
+											<xs:documentation>Orphanet identifier, e.g. 'ORPHA:171719'</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="ORPHA:[0-9]{1,8}"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ICD10" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>ICD10 information</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="code" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>ICD10 code, e.g. 'G30.1'</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="disease_status" use="required">
+							<xs:annotation>
+								<xs:documentation>Disease status</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="Affected"/>
+									<xs:enumeration value="Unaffected"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="age_of_onset">
+							<xs:annotation>
+								<xs:documentation>Age of onset of disease</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:integer">
+									<xs:minInclusive value="0"/>
+									<xs:maxInclusive value="200"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DiagnosticsInformation" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Information about the diagnostic outcome of the sample</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="outcome" use="required">
+							<xs:annotation>
+								<xs:documentation>Diagnostic outcome</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="significant findings"/>
+									<xs:enumeration value="no significant findings"/>
+									<xs:enumeration value="uncertain"/>
+									<xs:enumeration value="significant findings - second method"/>
+									<xs:enumeration value="significant findings - non-genetic"/>
+									<xs:enumeration value="candidate gene"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="genes" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Comma-separated list of causal gene(s), i.e. genes that contain mutations or candidate variants.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="inheritance">
+							<xs:annotation>
+								<xs:documentation>Inheritance mode if causal variant(s) were detected.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="autosomal recessive"/>
+									<xs:enumeration value="autosomal dominant"/>
+									<xs:enumeration value="autosomal recessive/dominant"/>
+									<xs:enumeration value="x-linked recessive"/>
+									<xs:enumeration value="x-linked dominant"/>
+									<xs:enumeration value="x-linked recessive/dominant"/>
+									<xs:enumeration value="mitochondrial"/>
+									<xs:enumeration value="de-novo"/>
+									<xs:enumeration value="somatic"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="comments" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>Additional free-text information about the diagnostic outcome conataining the variant of interest, the </xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Sample name</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="6"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="type" use="required">
+				<xs:annotation>
+					<xs:documentation>Sampe type</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="DNA"/>
+						<xs:enumeration value="RNA"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="is_tumor" type="xs:boolean" use="required">
+				<xs:annotation>
+					<xs:documentation>If the sample is a tumor sample</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="is_ffpe" type="xs:boolean" use="required">
+				<xs:annotation>
+					<xs:documentation>If the sample is derived from FFPE matieral</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="species" use="required">
+				<xs:annotation>
+					<xs:documentation>Species. Note: currently only human.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="human"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="gender">
+				<xs:annotation>
+					<xs:documentation>Sample gender</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="male"/>
+						<xs:enumeration value="female"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="quality">
+				<xs:annotation>
+					<xs:documentation>Sample quality</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="good"/>
+						<xs:enumeration value="medium"/>
+						<xs:enumeration value="bad"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--XML-Beispieldatei von XMLSpy generiert v2014 (x64) (http://www.altova.com)-->
+<Sample xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="sample_name" type="DNA" is_tumor="false" is_ffpe="false" species="human"  gender="male" quality="medium" xsi:noNamespaceSchemaLocation="NGS_exchange.xsd">
+	<KitInformation name="Agilent Exome v7" type="WES" shotgun="true">
+		<TargetRegion build="GRCh37">chr1	69070	70028
+chr1	621075	622054
+chr1	861301	861413
+chr1	865514	865736
+chr1	866398	866489
+chr1	871131	871296
+chr1	874399	874529
+chr1	874631	874860
+chr1	876503	876706
+chr1	877495	877651
+...
+		</TargetRegion>
+	</KitInformation>
+	<DiseaseInformation disease_status="Affected" age_of_onset="6">
+		<HPO id="HP:0001272"/>
+		<HPO id="HP:0001272"/>
+		<ICD10 code="G11.9"/>
+	</DiseaseInformation>
+	<DiagnosticsInformation outcome="significant findings" genes="ACO2" inheritance="autosomal recessive" comments="some text, e.g. the variant that was found"/>
+</Sample>
