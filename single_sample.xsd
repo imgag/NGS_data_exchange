@@ -113,6 +113,18 @@
 									</xs:attribute>
 								</xs:complexType>
 							</xs:element>
+							<xs:element name="OMIM" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>OMIM disease information</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="code" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>OMIM disease identifier, e.g. '#257220'</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
 						</xs:sequence>
 						<xs:attribute name="disease_status" use="required">
 							<xs:annotation>
@@ -243,7 +255,7 @@
 			</xs:attribute>
 			<xs:attribute name="quality">
 				<xs:annotation>
-					<xs:documentation>Sample quality</xs:documentation>
+					<xs:documentation>Quality of the sample NGSD data (enrichment and sequencing itself). 'bad' indicates that that data cannot be used.</xs:documentation>
 				</xs:annotation>
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
